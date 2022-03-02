@@ -148,3 +148,9 @@ render() {
 * data改变 - notify watcher
 * watcher不立即执行，queueWatcher将watcher放到队列中并去重
 * nextTick异步清空watcher队列，触发beforeUpdate - updated
+
+## 什么时候使用beforeDestroy
+
+* 解绑自定义事件$off
+* 解绑dom事件
+* 清除定时器
