@@ -1,15 +1,12 @@
 <!--
  * @Author: your name
  * @Date: 2022-03-03 01:45:20
- * @LastEditTime: 2022-03-04 00:49:02
+ * @LastEditTime: 2022-03-05 02:24:09
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \vue-note\docs\guide\js.md
 -->
-## window.onload与DOMContentLoaded区别
 
-* window.onload所有资源都加载完毕，包括图片视频等媒体资源
-* DOMContentLoaded指所有文档资源加载完毕，不包括图片视频等媒体资源
 
 ## js建立10个a标签，点击弹出对应序号
 
@@ -22,40 +19,6 @@ for (let a = 0; a < 10; a++) {
     });
     document.body.append($a);
 }
-```
-
-## 手写throttle,debounce
-
-* throttle:
-
-``` js
-    throttle (fn, wait = 500) {
-        let timer = null;
-        return function() {
-            if (timer) return;
-            timer = setTimeout(() =>{
-                timer = null;
-                fn.apply(this, arguments);
-            }, wait)
-        }
-    }
-```
-
-* debounce
-
-``` js
-    debounce(fn, wait = 500) {
-        let timer = null;
-        return function () {
-            if (timer) {
-                clearTimeout(timer);
-            }
-            timer = setTimeout(() => {
-                timer = null;
-                fn.apply(this, arguments);
-            }, wait);
-        }
-    }
 ```
 
 ## promise解决什么问题
@@ -103,12 +66,24 @@ for (let a = 0; a < 10; a++) {
 * === 完全相等，类型与值都相等
 * == 会进行类型转换, 一般 判断值为null||undefined时候使用 val == null
 
+## 列举类型转换
+
+* parseInt .toString()
+* == if && || + -
+
 # 原型原型链
 
 ## 如何判断一个变量是不是数组
 
 * a instanceof Array
 * Object.prototype.toString.call(a).slice(8. -1) === 'Array'
+
+## 描述new一个对象的过程
+
+* 创建一个新对象
+* 新对象原型指向构造函数原型
+* this指向这个新对象，执行函数
+* 返回新对象
 
 ## 手写一个jquery
 
@@ -169,6 +144,10 @@ Function.prototype.myBind = function() {
 }
 ```
 
+## 说一下变量提升的理解
+
+* 变量声明与函数定义都会提升到方法体顶部
+
 ## 实际开发中使用闭包的场景，举例说明
 
 * 函数作为参数
@@ -189,6 +168,11 @@ Function.prototype.myBind = function() {
 ## 闭包概念
 
 * 闭包就是能过够访问其他函数内部变量的函数
+
+## 闭包的作用
+
+* 封装变量
+* 收敛权限
 
 # 异步与单线程
 
@@ -331,3 +315,155 @@ function loadImg(src) {
 * git merge
 * git clone
 * git commit -amend xxx
+* git checkout . 撤销文件编辑
+* git stash, git stash pop 把编辑的内容更换分支
+* git reset --head xxx
+* git revert
+
+# 运行环境
+
+## 网页加载与渲染过程
+
+* 加载过程：
+  * 浏览器进程间通信将url发送到网络进程
+  * 网络进程通过url,检查是否有缓存，有缓存返回缓存，没缓存通过DNS解析url的ip地址与端口号
+  * 根据ip与端口号发送请求，服务器接受请求，返回给浏览器
+* 渲染过程
+  * 根据html生成dom tree
+  * 根据css生成cssom
+  * cssom与dom tree合并生成render tree
+  * 根据render tree渲染页面
+  * 遇到script会暂停渲染，优先加载执行js
+  * 直到把render tree渲染完成
+
+## 性能优化
+
+* css放到head,js放到body最下面
+* 使用缓存
+* 图片懒加载，压缩
+* gzip
+* 减少网络请求
+
+## window.onload与DOMContentLoaded区别
+
+* window.onload所有资源都加载完毕，包括图片视频等媒体资源
+* DOMContentLoaded指所有文档资源加载完毕，不包括图片视频等媒体资源
+
+## throttle与debounce
+
+``` js
+  function throttle(fn, delay) {
+      let timer = null;
+      return function() {
+          if (timer) return;
+          timer = setTimeout(() => {
+              fn.apply(this, arguments);
+              timer = null;
+          }, delay);
+      }
+  }
+```
+
+``` js
+  function debounce(fn, delay) {
+      let timer = null;
+      return function() {
+          if (timer) {
+              clearTimeout(timer);
+          }
+          timer = setTimeout(() => {
+              timer = null;
+              fn.apply(this, arguments);
+          }, delay);
+      }
+  }
+```
+
+## 安全
+
+* xss 跨站脚本攻击 富文本 xss过滤
+* csrf 跨域脚本攻击 编码/token、验证(身份信息) 使用post
+
+## js内置的全局函数与对象
+
+* Object, Array, Boolean, String, Number, RegExp, Date, Error, Math, JSON
+* document window
+
+## 拆解url
+
+``` js
+function getUrlParams(url) {
+    const search = url.split('?')[1];
+    const obj = {}
+    if (!search) return obj;
+
+    const items = search.split('&');
+    items.forEach((item) => {
+        const newItem = item.split('=');
+        const key = newItem[0];
+        const value = newItem[1];
+        obj[key] = value;
+    })
+    return obj
+}
+```
+
+## isEqual
+
+``` js
+    function isObj(data) {
+        return typeof data === 'object' && data !== null;
+    }
+
+    function isEqual(obj1, obj2) {
+        if (!isObj(obj1) || !isObj(obj2)) {
+            return obj1 === obj2;
+        } else {
+            if (obj1 === obj2) return true;
+            const obj1Keys = Object.keys(obj1);
+            const obj2Keys = Object.keys(obj2);
+            if (obj1Keys.length !== obj2Keys.length) {
+                return false;
+            }
+            for (let key in obj1) {
+                const keyEqual = isEqual(obj1[key], obj2[key]);
+                if (!keyEqual) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+```
+
+## forEach与map区别
+
+* map不改变原数组，forEach可能改变
+* map返回一个新数组
+
+## get与post区别
+
+* get参数会拼接到url，post不会
+* get会缓存，post不会
+* get参数会保留到历史中，post不会
+* get前进后退无害，post数据会重新提交
+
+## call与apply的区别
+
+* apply第二个参数为数组， call为多个参数
+
+## 函数声明与函数表达式区别
+
+* 函数声明会提升到方法体顶部
+
+## 创建对象的几种方式
+
+* 对象字面量
+* new Object()
+* 构造函数方式
+* 工厂模式
+* 原型创建对象
+
+## new Object()与Object.create区别
+
+* Object.create可以指定原型
