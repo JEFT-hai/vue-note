@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2022-03-03 01:45:20
- * @LastEditTime: 2022-03-05 02:24:09
+ * @LastEditTime: 2022-03-06 16:43:43
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \vue-note\docs\guide\js.md
@@ -408,6 +408,18 @@ function getUrlParams(url) {
 }
 ```
 
+``` js
+function queryUrl(url) {
+    const obj = {};
+    const searchUrl = url.split('?')[1]
+    const searchList = new URLSearchParams(searchUrl);
+    searchList.forEach((item, key) => {
+        obj[key] = item;
+    });
+    return obj
+}
+```
+
 ## isEqual
 
 ``` js
@@ -467,3 +479,100 @@ function getUrlParams(url) {
 ## new Object()与Object.create区别
 
 * Object.create可以指定原型
+
+## 获取最大值
+
+``` js
+function max() {
+    const arr = Array.from(arguments);
+    const maxItem = Math.max.apply(null, arr);
+    return maxItem;
+}
+
+function max() {
+    const arr = Array.from(arguments);
+    let maxItem = arr[0];
+    arr.map((item) => {
+        if (item > maxItem) {
+            maxItem = item;
+        }
+    });
+    return maxItem;
+}
+```
+
+## 如何捕获js异常
+
+* try catch
+* window.onerror
+
+# 正则
+
+## trim
+
+``` js
+function trim(str) {
+    return str.replace(/^\s+|\s+$/g, '');
+}
+```
+
+# 常用算法
+
+## flat
+
+``` js
+function flatern(arr) {
+    return arr.reduce((total, item) => {
+        return total.concat(Array.isArray(item) ? flatern(item) : item)
+    }, []);
+}
+```
+
+## 数组去重
+
+``` js
+function unique(arr) {
+    const newArr = new Set(arr);
+    return Array.from(newArr);
+}
+
+function unique(arr) {
+    return arr.reduce((total, item) => {
+        return total.includes(item) ? total : total.concat(item);
+    }, [])
+}
+```
+
+# promise
+
+## promise优缺点
+
+* 优点：
+  * 解决地狱回调
+* 缺点：
+  * 无法跟踪进度
+  * 无法取消
+
+## promise中reject与catch的区别
+
+* reject是抛出异常
+* catch是捕获异常
+* reject抛出的异常可以在then的第二个函数中接收，没有第二个函数会被catch捕获
+
+## async与普通函数区别
+
+* async异步函数，相当于promise,可以捕获错误，不终止后续代码
+* 普通函数，遇到错误会终止后续代码
+
+## js面向对象编程的特点
+
+* 封装 继承 多态
+
+## jsonp的callback一直没有返回数据
+
+* 使用轮询
+
+## 箭头函数的优缺点
+
+* 不能使用 arguments,constructor
+* this指向父级作用域
