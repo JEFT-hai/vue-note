@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2022-03-03 01:45:20
- * @LastEditTime: 2022-03-06 16:43:43
+ * @LastEditTime: 2022-03-27 17:21:05
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \vue-note\docs\guide\js.md
@@ -325,7 +325,7 @@ function loadImg(src) {
 ## 网页加载与渲染过程
 
 * 加载过程：
-  * 浏览器进程间通信将url发送到网络进程
+  * 浏览器进程间通信将ip发送到网络进程
   * 网络进程通过url,检查是否有缓存，有缓存返回缓存，没缓存通过DNS解析url的ip地址与端口号
   * 根据ip与端口号发送请求，服务器接受请求，返回给浏览器
 * 渲染过程
