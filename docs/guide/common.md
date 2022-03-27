@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2022-03-25 23:05:09
- * @LastEditTime: 2022-03-27 17:46:55
+ * @LastEditTime: 2022-03-27 23:37:44
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \vue-note\docs\guide\common.md
@@ -336,3 +336,80 @@ function throttle(fn, delay) {
 ## koa中间件模型
 
 * 输入输出经过， 一层一层的中间件
+
+## h5首屏优化
+
+* 路由/组件懒加载
+* 图片懒加载
+* app预取
+* 分页
+* hybrid
+* ssr
+
+## 后端返回10w条数据
+
+* 虚拟列表
+  * 只渲染可视区域的内容
+  * 其他区域不显示
+  * 随着浏览器滚动，创建和销毁dom
+
+## 文字超出省略
+
+``` js
+  .line-overflow {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .multiple-line-overflow {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-origin: vertical;
+    -webkit-line-clamp: 3;
+  }
+```
+
+## 常用的设计模式有哪些，并说明使用场景
+
+* 单例
+  * 连接websocket
+  * vuex store
+* 工厂
+  * jQuery $
+* 观察者模式
+  * 事件绑定
+* 发布订阅
+  * event-bus
+
+## 使用vue做过哪些优化
+
+* keep-alive缓存页面，实现列表页面缓存，与页面左右滑动效果
+* jeft-vue移动端组件库，按需引入
+* 组件懒加载
+* 路由懒加载
+
+## 使用vue遇到过哪些坑
+
+* getter会缓存， 要使用函数返回值格式，每次重新计算
+* list 页面进入详情页面，返回会回到顶部， keep-alive, 使用路由meta标记scrollY
+* 数组数据的增删 使用 Vue.set/this.$set,Vue.delete/this.$delete
+* mounted绑定的事件，在组件销毁前要解除绑定
+
+## 如何统一监听vue报错
+
+* window.onerror, 监听所有js报错，但不能监听vue组件报错
+* errorCaptured, 监听所有下级组件的错误，返回false会组织向上传播错误
+* errorHandler vue全局监听报错，但监听不到errorCaptured中返回false
+
+## 如果一个h5很慢，如何排查性能问题
+
+* chrome performance
+
+## 工作中遇到难点怎么解决得
+
+* 本地存储聊天数据 indexDB,使用第三方zangodb,使用mongodb-api操作indexDB
+* vant不能满足自定义页面组件但又频繁使用，写了一个参照vant的组件库jeft-vue，封装需要的组件。
+
+  
