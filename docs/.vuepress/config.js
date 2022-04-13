@@ -12,7 +12,7 @@ module.exports = {
   markdown: {
     lineNumbers: true
   },
-  base: '/jeft-vue-note/',
+  base: '/vue-note/',
   themeConfig: {
     locales: {
       '/': {
