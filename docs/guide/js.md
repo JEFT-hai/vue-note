@@ -7,7 +7,6 @@
  * @FilePath: \vue-note\docs\guide\js.md
 -->
 
-
 ## js建立10个a标签，点击弹出对应序号
 
 ``` js
